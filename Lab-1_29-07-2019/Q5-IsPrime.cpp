@@ -3,6 +3,7 @@
 
 bool check_prime(ll n)
 {
+	if(n<=1) return 0;
 	bool flag=1;
 	for(ll i=2;(i*i)<=n;i++)
 	{
