@@ -1,4 +1,5 @@
 #include<iostream>
+using namespace std;
 #define ll long long
 
 ll string_size(char *s)
@@ -61,15 +62,19 @@ void string_adder(char *a,char *b,int f,char *ans,int *flag)
 
 int main(void)
 {
-	static char a[1000000],b[1000000],ans[1000005];
-    scanf("%s",a);
-    scanf("%s",b);
-    int flag=0;
-    string_adder(a,b,0,ans,&flag);
-	char *t=ans;
-	while(*t=='0') t++;
-	if(*t=='\0') printf("0\n");
-    else printf("%s\n",t);
-
+	int q;
+	cin>>q;
+	while(q--)
+	{
+		char a[1000],b[1000],ans[1005];
+		scanf("%s",a);
+		scanf("%s",b);
+		int flag=0;
+		string_adder(a,b,0,ans,&flag);
+		char *t=ans;
+		while(*t=='0') t++;
+		if(*t=='\0') printf("0\n");
+		else printf("%s\n",t);
+	}
 	return 0;
 }

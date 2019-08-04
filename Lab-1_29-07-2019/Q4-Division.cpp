@@ -1,4 +1,5 @@
 #include<iostream>
+using namespace std;
 #define ll long long
 
 ll string_size(char *s)
@@ -67,7 +68,7 @@ void string_adder(char *a,char *b,int f,char *ans,int *flag)
 void string_dividor(char *a,char*b,ll na,ll nb,char *ans1,char *ans2)
 {
 	char f[10][nb+5];
-	char t[1000005];
+	char t[1005];
 	f[0][0]='\0';
 	ll fn[10];
 	fn[0]=0;
@@ -78,7 +79,7 @@ void string_dividor(char *a,char*b,ll na,ll nb,char *ans1,char *ans2)
 		fn[i]=string_size(f[i]);
 	}
 	ans2[0]='\0';
-	char temp[1000005];
+	char temp[1005];
 	temp[0]='\0';
 	for(ll i=0;i<na;i++)
 	{
@@ -108,20 +109,25 @@ void string_dividor(char *a,char*b,ll na,ll nb,char *ans1,char *ans2)
 
 int main(void)
 {
-	static char a[1000005],b[1000005],ans1[1000005],ans2[1000005];
-    scanf("%s",a);
-    scanf("%s",b);
-	ll na=string_size(a);
-	ll nb=string_size(b);
-    string_dividor(a,b,na,nb,ans1,ans2);
-	char *t=ans1;
-	while(*t=='0') t++;
-	if(*t=='\0') printf("0\n");
-    else printf("%s\n",t);
-	t=ans2;
-	while(*t=='0') t++;
-	if(*t=='\0') printf("0\n");
-    else printf("%s\n",t);
+	int q;
+	cin>>q;
+	while(q--)
+	{
+		static char a[1005],b[1005],ans1[1005],ans2[1005];
+		scanf("%s",a);
+		scanf("%s",b);
+		ll na=string_size(a);
+		ll nb=string_size(b);
+		string_dividor(a,b,na,nb,ans1,ans2);
+		char *t=ans1;
+		while(*t=='0') t++;
+		if(*t=='\0') printf("0\n");
+		else printf("%s\n",t);
+		t=ans2;
+		while(*t=='0') t++;
+		if(*t=='\0') printf("0\n");
+		else printf("%s\n",t);
+	}
 
 	return 0;
 }

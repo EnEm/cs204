@@ -1,4 +1,5 @@
 #include<iostream>
+using namespace std;
 #define ll long long
 
 ll string_size(char *s)
@@ -62,7 +63,7 @@ void string_multiplier(char *a,char *b,ll na,ll nb,char* ans)
 	ans[0]='\0';
 	ll n=0;
 	char f[10][na+1];
-	char t[2000005];
+	char t[2005];
 	f[0][0]='\0';
 	ll fn[10];
 	fn[0]=0;
@@ -93,19 +94,24 @@ void string_multiplier(char *a,char *b,ll na,ll nb,char* ans)
 
 int main(void)
 {
-	static char a[1000005],b[1000005],ans[2000020];
-    scanf("%s",a);
-    scanf("%s",b);
-	ll na=string_size(a);
-	ll nb=string_size(b);
-	string_reverse(a);
-	string_reverse(b);
-    string_multiplier(a,b,na,nb,ans);
-	string_reverse(ans);
-	char *t=ans;
-	while(*t=='0') t++;
-	if(*t=='\0') printf("0\n");
-    else printf("%s\n",t);
+	int q;
+	cin>>q;
+	while(q--)
+	{
+		char a[1000],b[1000],ans[2010];
+		scanf("%s",a);
+		scanf("%s",b);
+		ll na=string_size(a);
+		ll nb=string_size(b);
+		string_reverse(a);
+		string_reverse(b);
+		string_multiplier(a,b,na,nb,ans);
+		string_reverse(ans);
+		char *t=ans;
+		while(*t=='0') t++;
+		if(*t=='\0') printf("0\n");
+		else printf("%s\n",t);
+	}
 
 	return 0;
 }
