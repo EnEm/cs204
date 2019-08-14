@@ -113,6 +113,11 @@ int main()
                     stcksize++;
                 }
             }
+            else
+            {
+                flag=1;
+                break;   
+            }
         }
         if(flag==0&&stcksize==0)
         {
