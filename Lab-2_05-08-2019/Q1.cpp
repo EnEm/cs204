@@ -39,7 +39,6 @@ void DelFirst()
         node* temp=(top->ptr);
         free(top);
         top=temp;
-        cout<<0<<'\n';
     }
     return;
 }
@@ -61,7 +60,6 @@ void Del(ll x,ll y)
                 top=it->ptr;
             }
             free(it);
-            cout<<0<<'\n';
             return;
         }
         else
@@ -78,14 +76,17 @@ void Search(double d)
 {
     d*=d;
     node * it=top;
+    ll flag=0;
     while(it!=NULL)
     {
         if(it->dat.x*it->dat.x+it->dat.y*it->dat.y<=d)
         {
+            flag=1;
             cout<<'('<<it->dat.x<<','<<it->dat.y<<')';
         }
         it=it->ptr;
     }
+    if(flag==0) cout<<-1;
     cout<<'\n';
     return;
 }
