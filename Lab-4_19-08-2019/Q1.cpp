@@ -46,7 +46,7 @@ struct node *createNode()
     return temp;
 }
 
-vector<llchar> itop(string s,bool &error) 
+vector<llchar> itop(string s,bool &error)
 {
     stack<char> st;
     st.push('0');
@@ -54,7 +54,7 @@ vector<llchar> itop(string s,bool &error)
     vector<llchar> tt;
     bool flag=0;
     REP(i,0,n)
-    { 
+    {
         if(s[i]<='9'&&s[i]>='0')
         {
             if(flag==1)
@@ -76,19 +76,19 @@ vector<llchar> itop(string s,bool &error)
             st.push(s[i]);
             flag=0;
         }
-        else if(s[i] == ')') 
-        { 
-            while(st.top()!='0'&&st.top()!='(') 
+        else if(s[i] == ')')
+        {
+            while(st.top()!='0'&&st.top()!='(')
             {
                 llchar temp;
                 temp.f=1;
                 temp.c=st.top();
                 st.pop();
                 tt.PB(temp);
-            } 
+            }
             if(st.top()=='(')
             {
-                st.pop(); 
+                st.pop();
             }
             else
             {
@@ -98,14 +98,14 @@ vector<llchar> itop(string s,bool &error)
             flag=0;
         }
         else if(prec(s[i])>=0)
-        { 
+        {
             while(st.top()!='0'&&prec(s[i])<=prec(st.top()))
             {
                 if(s[i]=='^'&&st.top()=='^') break;
                 llchar temp;
                 temp.c=st.top();
-                temp.f=1; 
-                st.pop(); 
+                temp.f=1;
+                st.pop();
                 tt.PB(temp);
             }
             st.push(s[i]);
@@ -116,14 +116,14 @@ vector<llchar> itop(string s,bool &error)
             error=1;
             return tt;
         }
-        
+
     }
-    while(st.top()!='0') 
-    { 
+    while(st.top()!='0')
+    {
         llchar temp;
         temp.c=st.top();
-        temp.f=1; 
-        st.pop(); 
+        temp.f=1;
+        st.pop();
         tt.PB(temp);
     }
     return tt;
@@ -174,8 +174,17 @@ int main()
         cin>>n;
         while(n--)
         {
+            string s0;
+            cin>>s0;
+            ll flag_unary=1;
             string s;
-            cin>>s;
+            REP(i,0,s0.size())
+            {
+                  if(flag_unary==1&&s0[i]=='-') s+="0";
+                  else if(s0[i]>='0'&&s0[i]<='9') flag_unary=0;
+                  else flag_unary=1;
+                  s+=s0[i];
+            }
             struct node *root;
             struct node *cur;
             bool error=0;
