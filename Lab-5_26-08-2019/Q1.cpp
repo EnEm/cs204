@@ -258,7 +258,7 @@ int main()
             REP(i,0,s0.size())
             {
                   if(flag_unary==1&&s0[i]=='-') s+="0";
-                  else if(s0[i]>='0'&&s0[i]<='9') flag_unary=0;
+                  else if((s0[i]>='0'&&s0[i]<='9')||(s0[i]>='a'&&s0[i]<='z')||(s0[i]>='A'&&s0[i]<='Z')) flag_unary=0;
                   else flag_unary=1;
                   s+=s0[i];
             }
