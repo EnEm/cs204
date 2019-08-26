@@ -75,6 +75,7 @@ vector<llchar> itop(string s,bool &error,ll var_cnt,string var_name[],ll var_val
                     break;
                 }
             }
+            var.clear();
             if(flag_init==0) 
             {
                 error=1;
@@ -85,8 +86,9 @@ vector<llchar> itop(string s,bool &error,ll var_cnt,string var_name[],ll var_val
             temp.f=0;
             tt.PB(temp);
             flag_var=0;
+            i--;
         }
-        if((s[i]>='a'&&s[i]<='z')||(s[i]>='A'&&s[i]<='Z'))
+        else if((s[i]>='a'&&s[i]<='z')||(s[i]>='A'&&s[i]<='Z'))
         {
             flag_var=1;
             i--;
@@ -213,15 +215,15 @@ int main()
         ll var_val[n];
         while(n--)
         {
-            string s0;
-            cin>>s0;
+            string s00;
+            cin>>s00;
             ll flag_assgn=0;
             ll var_size;
-            string s;
+            string s0;
             string uninit_var;
-            REP(i,0,s0.size())
+            REP(i,0,s00.size())
             {
-                if(s0[i]=='=') 
+                if(s00[i]=='=') 
                 {
                     flag_assgn++;
                     var_size=i;
@@ -234,8 +236,8 @@ int main()
             }
             else if(flag_assgn==1)
             {
-                s=s0.substr(var_size+1,s0.size()-var_size-1);
-                uninit_var=s0.substr(0,var_size);
+                s0=s00.substr(var_size+1,s00.size()-var_size-1);
+                uninit_var=s00.substr(0,var_size);
                 bool flag_var_name_correct=0;
                 REP(i,0,var_size)
                 {
@@ -249,7 +251,16 @@ int main()
             }
             else
             {
-                s=s0;
+                s0=s00;
+            }
+            ll flag_unary=1;
+            string s;
+            REP(i,0,s0.size())
+            {
+                  if(flag_unary==1&&s0[i]=='-') s+="0";
+                  else if(s0[i]>='0'&&s0[i]<='9') flag_unary=0;
+                  else flag_unary=1;
+                  s+=s0[i];
             }
             struct node *root;
             struct node *cur;
