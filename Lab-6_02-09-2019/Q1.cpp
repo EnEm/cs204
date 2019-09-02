@@ -36,7 +36,9 @@ int main()
         if(queries[i][0]==1)
         {
             ll x=lower_bound(user_id,user_id+q,queries[i][1])-user_id;
+            
             user_value[x]+=queries[i][2];
+
             if(flag_max_user_id==0) 
             {
                 flag_max_user_id=1;
