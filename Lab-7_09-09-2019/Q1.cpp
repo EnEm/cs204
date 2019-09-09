@@ -5,7 +5,26 @@ using namespace std;
 
 bool comp(string &x,string &y)
 {
-    
+    bool flag=1;
+
+    ll xn=x.size();
+    ll yn=y.size();
+
+    REP(i,0,xn+yn)
+    {
+        if((i<xn?x[i]:y[i-xn])<(i<yn?y[i]:x[i-yn]))
+        {
+            flag=0;
+            break;
+        }
+        else if((i<xn?x[i]:y[i-xn])>(i<yn?y[i]:x[i-yn]))
+        {
+            flag=1;
+            break;
+        }
+    }
+
+    return flag;
 }
 
 int main()
