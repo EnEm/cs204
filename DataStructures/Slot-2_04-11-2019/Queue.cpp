@@ -79,8 +79,10 @@ class queue
         }
         bool empty()
         {
-            if(queue_size==0) return true;
-            else return false;
+            if(queue_size==0) 
+                return true;
+            else 
+                return false;
         }
         int size()
         {

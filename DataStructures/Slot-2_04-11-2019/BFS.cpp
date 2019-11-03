@@ -12,7 +12,8 @@ void bfs(int root,vector<int> adjancency_list[],int n)
     {
         root=precedence_list.front();
         precedence_list.pop();
-        if(visited[root]) continue;
+        if(visited[root])
+            continue;
         visited[root]=1;
         for(auto node:adjancency_list[root])
         {

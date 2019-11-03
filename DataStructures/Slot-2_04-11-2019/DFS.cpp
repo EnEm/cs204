@@ -8,7 +8,8 @@ void dfs(int root,vector<int> adjancency_list[],int visited[])
     cout<<root<<' ';
     for(auto node:adjancency_list[root])
     {
-        if(!visited[node]) dfs(node,adjancency_list,visited);
+        if(!visited[node])
+            dfs(node,adjancency_list,visited);
     }
     return;
 }
