@@ -71,11 +71,11 @@ class queue
         }
         data_type front()
         {
-            return head->value;
+            return tail->value;
         }
         data_type back()
         {
-            return tail->value;
+            return head->value;
         }
         bool empty()
         {
