@@ -2,11 +2,11 @@
 #include<vector>
 using namespace std;
 
-void floyd_warshall(vector<pair<int,int>> adjancency_weight_pair_list[],int number_of_nodes)
+int** floyd_warshall(vector<pair<int,int>> adjancency_weight_pair_list[],int number_of_nodes)
 {
     //This function works for 1-indexed nodes
-    int INF=1<<30;
-    int distance[number_of_nodes+1][number_of_nodes+1];
+    int INF=1<<30-1;
+    int (*distance)[number_of_nodes+1]=(int (*)[number_of_nodes+1])(malloc(sizeof(int [number_of_nodes+1][number_of_nodes+1])));
     for(int root=1;root<=number_of_nodes;root++)
     {
         for(int node=1;node<=number_of_nodes;node++)
@@ -36,12 +36,11 @@ void floyd_warshall(vector<pair<int,int>> adjancency_weight_pair_list[],int numb
     {
         for(int node=1;node<=number_of_nodes;node++)
         {
-            cout<<distance[root][node]<<' ';
+            if(distance[root][node]==INF) distance[root][node]=-1;
         }
-        cout<<'\n';
     }
 
-    return;
+    return (int**)distance;
 }
 
 int main()
@@ -53,10 +52,19 @@ int main()
     {
         int u,v,w;
         cin>>u>>v>>w;
-        ad[u].push_back(make_pair(u,w));
-        ad[v].push_back(make_pair(v,w));
+        ad[u].push_back(make_pair(v,w));
     }
-    floyd_warshall(ad,n);
+    int (*a)[n+1];
+    a=(int (*)[n+1])(floyd_warshall(ad,n));
+    int q;
+    cin>>q;
+    while(q--)
+    {
+        int u,v;
+        cin>>u>>v;
+        cout<<a[u][v]<<'\n';
+    }
+    free(a);
 
     return 0;
 }
