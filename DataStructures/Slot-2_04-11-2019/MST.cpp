@@ -28,7 +28,7 @@ bool union_set(int node1,int node2,int parent_list[],int set_size[])
     return true;
 }
 
-void floyd_warshall(vector<pair<int,int>> adjancency_weight_pair_list[],int number_of_nodes)
+vector<pair<int,pair<int,int>>> kruskal(vector<pair<int,int>> adjancency_weight_pair_list[],int number_of_nodes)
 {
     //This function works for 1-indexed nodes
     vector<pair<int,pair<int,int>>> total_weight_edge_pair_list;
@@ -51,7 +51,7 @@ void floyd_warshall(vector<pair<int,int>> adjancency_weight_pair_list[],int numb
             final_weight_edge_pair_list.push_back(weight_edge_pair);
     }
 
-    return;
+    return final_weight_edge_pair_list;
 }
 
 int main()
@@ -63,10 +63,16 @@ int main()
     {
         int u,v,w;
         cin>>u>>v>>w;
-        ad[u].push_back(make_pair(u,w));
-        ad[v].push_back(make_pair(v,w));
+        ad[u].push_back(make_pair(v,w));
+        ad[v].push_back(make_pair(u,w));
     }
-    floyd_warshall(ad,n);
+    auto v=kruskal(ad,n);
+    long long ans=0;
+    for(auto x:v)
+    {
+        ans+=x.first;
+    }
+    cout<<ans;
 
     return 0;
 }
