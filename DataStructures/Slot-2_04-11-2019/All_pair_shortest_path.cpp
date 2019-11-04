@@ -56,13 +56,13 @@ int main()
     }
     int (*a)[n+1];
     a=(int (*)[n+1])(floyd_warshall(ad,n));
-    int q;
-    cin>>q;
-    while(q--)
+    for(int i=1;i<=n;i++)
     {
-        int u,v;
-        cin>>u>>v;
-        cout<<a[u][v]<<'\n';
+        for(int j=1;j<=n;j++)
+        {
+            cout<<a[i][j]<<' ';
+        }
+        cout<<'\n';
     }
     free(a);
 
