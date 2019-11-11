@@ -55,7 +55,7 @@ int main()
     dsu v(5);
     v.union_(1,5);
     v.union_(3,5);
-    cout<<v.is_same(3,1);
-    cout<<v.is_same(3,2);
+    cout<<v.is_same(3,1)<<endl;
+    cout<<v.is_same(3,2)<<endl;
     return 0;
 }

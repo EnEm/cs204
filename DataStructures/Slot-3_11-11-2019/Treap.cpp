@@ -1,106 +1,66 @@
 #include<iostream>
 #include<time.h>
 using namespace std; 
-  
-// A Treap Node 
-struct TreapNode 
+
+struct treap_node 
 { 
     int key, priority; 
-    TreapNode *left, *right; 
-}; 
-  
-/* T1, T2 and T3 are subtrees of the tree rooted with y 
-  (on left side) or x (on right side) 
-                y                               x 
-               / \     Right Rotation          /  \ 
-              x   T3   – – – – – – – >        T1   y 
-             / \       < - - - - - - -            / \ 
-            T1  T2     Left Rotation            T2  T3 */
-  
-// A utility function to right rotate subtree rooted with y 
-// See the diagram given above. 
-TreapNode *rightRotate(TreapNode *y) 
+    struct treap_node *left, *right; 
+};
+
+struct treap_node *rightRotate(struct treap_node *y) 
 { 
-    TreapNode *x = y->left,  *T2 = x->right; 
-  
-    // Perform rotation 
-    x->right = y; 
-    y->left = T2; 
-  
-    // Return new root 
-    return x; 
+    struct treap_node *x = y->left,  *T2 = x->right;
+    x->right = y;
+    y->left = T2;
+    return x;
+}
+
+struct treap_node *leftRotate(struct treap_node *x) 
+{
+    struct treap_node *y = x->right, *T2 = y->left;
+    y->left = x;
+    x->right = T2;
+    return y;
+}
+
+struct treap_node* newNode(int key) 
+{ 
+    struct treap_node* temp = new struct treap_node;
+    temp->key = key;
+    temp->priority = rand()%100;
+    temp->left = temp->right = NULL;
+    return temp;
+}
+
+struct treap_node* search(struct treap_node* root, int key) 
+{
+    if (root == NULL || root->key == key)
+       return root;
+    if (root->key < key)
+       return search(root->right, key);
+    return search(root->left, key);
 } 
-  
-// A utility function to left rotate subtree rooted with x 
-// See the diagram given above. 
-TreapNode *leftRotate(TreapNode *x) 
-{ 
-    TreapNode *y = x->right, *T2 = y->left; 
-  
-    // Perform rotation 
-    y->left = x; 
-    x->right = T2; 
-  
-    // Return new root 
-    return y; 
-} 
-  
-/* Utility function to add a new key */
-TreapNode* newNode(int key) 
-{ 
-    TreapNode* temp = new TreapNode; 
-    temp->key = key; 
-    temp->priority = rand()%100; 
-    temp->left = temp->right = NULL; 
-    return temp; 
-} 
-  
-// C function to search a given key in a given BST 
-TreapNode* search(TreapNode* root, int key) 
-{ 
-    // Base Cases: root is null or key is present at root 
-    if (root == NULL || root->key == key) 
-       return root; 
-  
-    // Key is greater than root's key 
-    if (root->key < key) 
-       return search(root->right, key); 
-  
-    // Key is smaller than root's key 
-    return search(root->left, key); 
-} 
-  
-/* Recursive implementation of insertion in Treap */
-TreapNode* insert(TreapNode* root, int key) 
-{ 
-    // If root is NULL, create a new node and return it 
-    if (!root) 
-        return newNode(key); 
-  
-    // If key is smaller than root 
+
+struct treap_node* insert(struct treap_node* root, int key) 
+{
+    if (!root)
+        return newNode(key);
     if (key <= root->key) 
-    { 
-        // Insert in left subtree 
-        root->left = insert(root->left, key); 
-  
-        // Fix Heap property if it is violated 
+    {
+        root->left = insert(root->left, key);
         if (root->left->priority > root->priority) 
             root = rightRotate(root); 
     } 
-    else  // If key is greater 
-    { 
-        // Insert in right subtree 
-        root->right = insert(root->right, key); 
-  
-        // Fix Heap property if it is violated 
+    else
+    {
+        root->right = insert(root->right, key);
         if (root->right->priority > root->priority) 
             root = leftRotate(root); 
     } 
     return root; 
-} 
-  
-/* Recursive implementation of Delete() */
-TreapNode* deleteNode(TreapNode* root, int key) 
+}
+struct treap_node* deleteNode(struct treap_node* root, int key) 
 { 
     if (root == NULL) 
         return root; 
@@ -108,27 +68,21 @@ TreapNode* deleteNode(TreapNode* root, int key)
     if (key < root->key) 
         root->left = deleteNode(root->left, key); 
     else if (key > root->key) 
-        root->right = deleteNode(root->right, key); 
-  
-    // IF KEY IS AT ROOT 
-  
-    // If left is NULL 
+        root->right = deleteNode(root->right, key);
+
     else if (root->left == NULL) 
     { 
-        TreapNode *temp = root->right; 
+        struct treap_node *temp = root->right; 
         delete(root); 
-        root = temp;  // Make right child as root 
-    } 
-  
-    // If Right is NULL 
+        root = temp;
+    }
     else if (root->right == NULL) 
     { 
-        TreapNode *temp = root->left; 
+        struct treap_node *temp = root->left; 
         delete(root); 
-        root = temp;  // Make left child as root 
+        root = temp;
     } 
-  
-    // If ksy is at root and both left and right are not NULL 
+
     else if (root->left->priority < root->right->priority) 
     { 
         root = leftRotate(root); 
@@ -142,9 +96,8 @@ TreapNode* deleteNode(TreapNode* root, int key)
   
     return root; 
 } 
-  
-// A utility function to print tree 
-void inorder(TreapNode* root) 
+
+void inorder(struct treap_node* root) 
 { 
     if (root) 
     { 
@@ -159,17 +112,15 @@ void inorder(TreapNode* root)
         inorder(root->right); 
     } 
 } 
-  
-  
-// Driver Program to test above functions 
+
 int main() 
 { 
     srand(time(NULL)); 
   
-    struct TreapNode *root = NULL; 
+    struct treap_node *root = NULL; 
     root = insert(root, 50); 
     root = insert(root, 30); 
-    root = insert(root, 20); 
+    root = insert(root, 20);
     root = insert(root, 40); 
     root = insert(root, 70); 
     root = insert(root, 60); 
@@ -193,7 +144,7 @@ int main()
     cout << "Inorder traversal of the modified tree \n"; 
     inorder(root); 
   
-    TreapNode *res = search(root, 50); 
+    struct treap_node *res = search(root, 50); 
     (res == NULL)? cout << "\n50 Not Found ": 
                    cout << "\n50 found"; 
   
