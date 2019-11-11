@@ -7,19 +7,19 @@ class BST
 {
     private:
         int number_of_nodes;
-        struct node
+        struct BST_node
         {
             data_type key;
-            struct node* left_child;
-            struct node* right_child;
-            struct node* parent;
+            struct BST_node* left_child;
+            struct BST_node* right_child;
+            struct BST_node* parent;
         };
-        struct node* create_node()
+        struct BST_node* create_node()
         {
-            return (struct node*)(malloc(sizeof(struct node)));
+            return (struct BST_node*)(malloc(sizeof(struct BST_node)));
         }
-        struct node* root;
-        struct node* find_node(struct node* temp_root,data_type value)
+        struct BST_node* root;
+        struct BST_node* find_node(struct BST_node* temp_root,data_type value)
         {
             if(temp_root==NULL)
                 return NULL;
@@ -44,13 +44,13 @@ class BST
             root=NULL;
             number_of_nodes=0;
         }
-        struct node* search_node(data_type value)
+        struct BST_node* search_node(data_type value)
         {
             return find_node(root,value);
         }
         bool count_node(data_type value)
         {
-            struct node* temp_node=search_node(value);
+            struct BST_node* temp_node=search_node(value);
             if(temp_node==NULL)
                 return false;
             else if(temp_node->key!=value)
@@ -75,8 +75,8 @@ class BST
             }
             else
             {
-                struct node* temp_root=search_node(value);
-                struct node* temp_node=create_node();
+                struct BST_node* temp_root=search_node(value);
+                struct BST_node* temp_node=create_node();
                 temp_node->parent=temp_root;
                 temp_node->left_child=temp_node->right_child=NULL;
                 temp_node->key=value;
@@ -95,7 +95,7 @@ class BST
         {
             if(!count_node(value))
                 return false;
-            struct node* temp_root=search_node(value);
+            struct BST_node* temp_root=search_node(value);
             if(temp_root->left_child==NULL)
             {
                 if(temp_root->parent==NULL)
@@ -139,6 +139,6 @@ class BST
 
 int main()
 {
-    BST v;
+    BST<int> v;
     return 0;
 }
