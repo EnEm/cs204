@@ -1,144 +1,79 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
-
-template<typename data_type>
-
+template <typename T>
 class BST
 {
-    private:
-        int number_of_nodes;
-        struct BST_node
-        {
-            data_type key;
-            struct BST_node* left_child;
-            struct BST_node* right_child;
-            struct BST_node* parent;
-        };
-        struct BST_node* create_node()
-        {
-            return (struct BST_node*)(malloc(sizeof(struct BST_node)));
-        }
-        struct BST_node* root;
-        struct BST_node* find_node(struct BST_node* temp_root,data_type value)
-        {
-            if(temp_root==NULL)
-                return NULL;
-            else if(value==temp_root->key)
-                return temp_node;
-            else if(value<temp_root->key)
-            {
-                if(temp_root->left_child==NULL) return temp_root;
-                else return find_node(temp_root->left_child,value);
-            }
-            else if(value>temp_root->key)
-            {
-                if(temp_root->right_child==NULL) return temp_root;
-                else return find_node(temp_root->right_child,value);
-            }
-            else
-                return NULL;
-        }
     public:
-        BST()
-        {
-            root=NULL;
-            number_of_nodes=0;
-        }
-        struct BST_node* search_node(data_type value)
-        {
-            return find_node(root,value);
-        }
-        bool count_node(data_type value)
-        {
-            struct BST_node* temp_node=search_node(value);
-            if(temp_node==NULL)
-                return false;
-            else if(temp_node->key!=value)
-                return false;
-            else
-                return true;
-        }
-        bool insert_node(data_type value)
-        {
-            if(count_node(value))
-            {
-                return false;
-            }
-            else if(root==NULL)
-            {
-                root=create_node();
-                root->parent=NULL;
-                root->left_child=NULL;
-                root->right_child=NULL;
-                root->key=value;
-                return true;
-            }
-            else
-            {
-                struct BST_node* temp_root=search_node(value);
-                struct BST_node* temp_node=create_node();
-                temp_node->parent=temp_root;
-                temp_node->left_child=temp_node->right_child=NULL;
-                temp_node->key=value;
-                if(value<temp_root->key)
-                {
-                    temp_root->left_child=temp_node;
-                }
-                else
-                {
-                    temp_root->right_child=temp_node;
-                }
-                return true;
-            }
-        }
-        bool delete_node(data_type value)
-        {
-            if(!count_node(value))
-                return false;
-            struct BST_node* temp_root=search_node(value);
-            if(temp_root->left_child==NULL)
-            {
-                if(temp_root->parent==NULL)
-                {
-                    root=temp_root->right_child;
-                    if(root!=NULL) root->parent=NULL;
-                    free(temp_root);
-                    return true;
-                }
-                else
-                {
-                    (temp_root->parent)->right_child=temp_root->right_child;
-                    if(temp_root->right_child!=NULL) (temp_root->right_child)->parent=temp_root->parent;
-                    free(temp_root);
-                    return true;
-                }
-            }
-            else if(temp_root->right_child==NULL)
-            {
-                if(temp_root->parent==NULL)
-                {
-                    root=temp_root->left_child;
-                    if(root!=NULL) root->parent=NULL;
-                    free(temp_root);
-                    return true;
-                }
-                else
-                {
-                    (temp_root->parent)->left_child=temp_root->left_child;
-                    if(temp_root->left_child!=NULL) (temp_root->left_child)->parent=temp_root->parent;
-                    free(temp_root);
-                    return true;
-                }
-            }
-            else
-            {
+        struct BST_node 
+        { 
+            int key; 
+            struct BST_node *LEFT, *RIGHT; 
+        }; 
+        struct BST_node *ROOT=NULL;
+        struct BST_node *newNode(int item) 
+        { 
+            struct BST_node *temp =  new struct BST_node; 
+            temp->key = item; 
+            temp->LEFT = temp->RIGHT = NULL; 
+            return temp; 
+        } 
+        void inorder(struct BST_node *root) 
+        { 
+            if (root != NULL) 
+            { 
+                inorder(root->LEFT); 
+                cout<<root->key<<" ";
+                inorder(root->RIGHT); 
+            } 
+        } 
 
-            }
-        }
+        struct BST_node* insert(struct BST_node* node, int key) 
+        { 
+            if (node == NULL) return newNode(key); 
+            if (key < node->key) 
+                node->LEFT  = insert(node->LEFT, key); 
+            else if (key > node->key) 
+                node->RIGHT = insert(node->RIGHT, key);    
+            return node; 
+        } 
+        struct BST_node * successor(struct BST_node* node) 
+        { 
+            struct BST_node* current = node; 
+            while (current && current->LEFT != NULL) 
+                current = current->LEFT; 
+            return current; 
+        } 
+        struct BST_node* deletenode(struct BST_node* root, int key) 
+        { 
+            if (root == NULL) return root; 
+            if (key < root->key) 
+                root->LEFT = deleteNode(root->LEFT, key); 
+            else if (key > root->key) 
+                root->RIGHT = deleteNode(root->RIGHT, key); 
+            else
+            { 
+                if (root->LEFT == NULL) 
+                { 
+                    struct BST_node *temp = root->RIGHT; 
+                    free(root); 
+                    return temp; 
+                } 
+                else if (root->RIGHT == NULL) 
+                { 
+                    struct BST_node *temp = root->LEFT; 
+                    free(root); 
+                    return temp; 
+                } 
+                struct BST_node* temp = successor(root->RIGHT); 
+                root->key = temp->key; 
+                root->RIGHT = deleteNode(root->RIGHT, temp->key); 
+            } 
+            return root; 
+        } 
 };
 
-int main()
-{
-    BST<int> v;
-    return 0;
+int main() 
+{ 
+    
+    return 0; 
 }
